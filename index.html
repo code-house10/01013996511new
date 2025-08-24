@@ -39,6 +39,68 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <style>
+        /* Styles for the floating discount button */
+        .floating-discount-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff0000; /* Red background for attention */
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            z-index: 1000;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .floating-discount-button .icon {
+            font-size: 24px;
+        }
+        
+        .floating-discount-button .text-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .floating-discount-button .timer {
+            font-weight: bold;
+            font-size: 18px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 5px;
+        }
+        
+        /* Styles for the floating phone button */
+        .floating-phone-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px; /* Position on the left */
+            background-color: #25D366; /* A green color, good for calls */
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            z-index: 1000;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .floating-phone-button .icon {
+            font-size: 24px;
+        }
+    </style>
 </head>
 
 <body>
@@ -582,6 +644,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <!-- Copyright End -->
 
+    
+
+    <!-- Floating Phone Button -->
+    <a href="tel:01013996511" class="floating-phone-button">
+        <i class="fa fa-phone-alt icon"></i>
+        <span>01013996511</span>
+    </a>
+
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -601,6 +671,42 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script>
+        // JavaScript for the countdown timer
+        (function() {
+            const countdownElement = document.getElementById('countdown-timer');
+            const discountButton = document.getElementById('discount-button');
+            
+            // Set the duration of the countdown (9 hours)
+            const nineHoursInMs = 9 * 60 * 60 * 1000;
+            const endTime = new Date().getTime() + nineHoursInMs;
+
+            const countdownInterval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = endTime - now;
+
+                // Time calculations for hours, minutes and seconds
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Add leading zeros if needed
+                const formattedHours = hours < 10 ? "0" + hours : hours;
+                const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+                const formattedSeconds = seconds < 10 ? "0" + seconds : seconds;
+
+                // Display the result in the element with id="countdown-timer"
+                countdownElement.innerHTML = formattedHours + ":" + formattedMinutes + ":" + formattedSeconds;
+
+                // If the countdown is finished, hide the button
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    discountButton.style.display = 'none';
+                }
+            }, 1000);
+        })();
+    </script>
 </body>
 
 </html>
